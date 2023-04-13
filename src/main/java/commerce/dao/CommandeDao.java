@@ -83,4 +83,37 @@ public class CommandeDao {
         }
         //return result;
     }
+    public List<Commande> getAllCommandes() {
+        List<Commande> list = new ArrayList<>();
+        try {
+            query = "select * from orders";
+            pst = this.con.prepareStatement(query);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+            	Commande Commande = new Commande();
+                ProduitDao produitDao = new ProduitDao(this.con);
+                UserDao userdao = new UserDao(this.con);
+                int pId = rs.getInt("p_id");
+                int uId = rs.getInt("u_id");
+                Produit produit = produitDao.getSingleProduit(pId);
+                User user = userdao.getUserById(uId);
+                
+                Commande.setCommandeId(rs.getInt("o_id"));
+                Commande.setUid(rs.getInt("u_id"));
+                Commande.setName(produit.getName());
+                Commande.setUid(rs.getInt("o_id"));
+                Commande.setCategory(produit.getCategory());
+                Commande.setQunatity(rs.getInt("o_quantity"));
+                Commande.setPrice(produit.getPrice()*rs.getInt("o_quantity"));
+                Commande.setDate(rs.getString("o_date"));
+                list.add(Commande);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
+    
 }

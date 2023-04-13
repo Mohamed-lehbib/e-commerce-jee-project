@@ -38,7 +38,12 @@ boolean isAdmin = auth != null && auth.getRole().equals("admin");
 <title>TESEWOUGHI</title>
 </head>
 <body>
+	<% if (isAdmin) { %>
+	<%@include file="/includes/navbar2.jsp"%>
+	<%}else{%>
 	<%@include file="/includes/navbar.jsp"%>
+	<%}%>
+	
 
 	<div class="container">
 		<div class="card-header my-3" ><h3 style="text-align:center">Produits</h3> 

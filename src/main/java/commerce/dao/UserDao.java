@@ -34,5 +34,25 @@ public class UserDao {
         }
         return user;
     }
+	public User getUserById(int id) {
+		User user = null;
+        try {
+            query = "select * from users where id=?";
+            pst = this.con.prepareStatement(query);
+            pst.setInt(1, id);
+            rs = pst.executeQuery();
+            if(rs.next()){
+            	user = new User();
+            	user.setId(rs.getInt("id"));
+            	user.setName(rs.getString("name"));
+            	user.setEmail(rs.getString("email"));
+            	user.setRole(rs.getString("role"));
+            }
+        } catch (SQLException e) {
+            System.out.print(e.getMessage());
+        }
+        return user;
+    }
+	 
 	
     }

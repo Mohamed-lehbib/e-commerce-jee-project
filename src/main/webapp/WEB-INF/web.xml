@@ -129,4 +129,14 @@
     <servlet-name>ModifierProduit</servlet-name>
     <url-pattern>/modifier-produit</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetAllCommande</display-name>
+    <servlet-name>GetAllCommande</servlet-name>
+    <servlet-class>commerce.servlet.GetAllCommande</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetAllCommande</servlet-name>
+    <url-pattern>/get-all-commande</url-pattern>
+  </servlet-mapping>
 </web-app>
