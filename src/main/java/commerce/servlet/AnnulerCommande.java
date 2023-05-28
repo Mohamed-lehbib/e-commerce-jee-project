@@ -31,7 +31,7 @@ public class AnnulerCommande extends HttpServlet {
 				CommandeDao commandeDao = new CommandeDao(DbCon.getConnection());
 				commandeDao.cancelCommande(Integer.parseInt(id));
 			}
-			response.sendRedirect("commande.jsp");
+			response.sendRedirect("commande3.jsp");
 		} catch (ClassNotFoundException|SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

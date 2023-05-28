@@ -1,27 +1,40 @@
 package commerce.model;
-
+import commerce.model.User;
+import commerce.model.Produit;
 public class Commande extends Produit{
 	private int commandeId;
 	private int uid;
 	private int qunatity;
 	private String date;
+	private String uemail;
+	private double price;
+	private String category;
 	
+	
+	    
+	
+
 	public Commande() {
 	}
 	
-	public Commande(int commandeId, int uid, int qunatity, String date) {
+	public Commande(int commandeId, int uid, int qunatity, String date, String uemail,float price ,String category) {
 		super();
 		this.commandeId = commandeId;
 		this.uid = uid;
 		this.qunatity = qunatity;
 		this.date = date;
+		this.uemail = uemail;
+		this.price = price;
+		this.category = category;
 	}
 
-	public Commande(int uid, int qunatity, String date) {
+	public Commande(int uid, int qunatity, String date, String uemail,String category) {
 		super();
 		this.uid = uid;
 		this.qunatity = qunatity;
 		this.date = date;
+		this.uemail = uemail;
+		this.category = category;
 	}
 
 	public int getCommandeId() {
@@ -50,6 +63,24 @@ public class Commande extends Produit{
 	}
 	public void setDate(String date) {
 		this.date = date;
+	}
+	public String getUemail() {
+		return uemail;
+	}
+	public void setUemail(String uemail) {
+		this.uemail = uemail;
+	}
+	public Double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
 	}
 }
 

@@ -139,4 +139,14 @@
     <servlet-name>GetAllCommande</servlet-name>
     <url-pattern>/get-all-commande</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SupprimerUser</display-name>
+    <servlet-name>SupprimerUser</servlet-name>
+    <servlet-class>commerce.servlet.SupUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SupprimerUser</servlet-name>
+    <url-pattern>/supprimeruser-servlet</url-pattern>
+  </servlet-mapping>
 </web-app>

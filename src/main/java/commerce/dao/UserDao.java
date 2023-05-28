@@ -2,6 +2,11 @@ package commerce.dao;
 
 import java.sql.*;
 import commerce.model.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
 
 public class UserDao {
 	private Connection con;
@@ -53,6 +58,43 @@ public class UserDao {
         }
         return user;
     }
-	 
+	
+	
+	public List<User> getAllUsers() {
+	    List<User> userList = new ArrayList<>();
+	    try {
+	        query = "SELECT * FROM users";
+	        pst = this.con.prepareStatement(query);
+	        rs = pst.executeQuery();
+	        while (rs.next()) {
+	            User user = new User();
+	            user.setId(rs.getInt("id"));
+	            user.setName(rs.getString("name"));
+	            user.setEmail(rs.getString("email"));
+	            user.setPassword(rs.getString("password"));
+	            // Ajouter d'autres attributs de l'utilisateur si nécessaire
+	            userList.add(user);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        System.out.println(e.getMessage());
+	    }
+	    return userList;
+	}
+
+	 public void cancelUser(int id) {
+	        //boolean result = false;
+	        try {
+	            query = "delete from users where id=?";
+	            pst = this.con.prepareStatement(query);
+	            pst.setInt(1, id);
+	            pst.execute();
+	            //result = true;
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            System.out.print(e.getMessage());
+	        }
+	        //return result;
+	    }
 	
     }

@@ -1,10 +1,21 @@
 package commerce.dao;
-
+import commerce.model.Produit;
+import commerce.model.User;
+import commerce.model.Commande;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+
+
 
 import commerce.model.*;
 
@@ -40,7 +51,6 @@ public class CommandeDao {
         return result;
     }
 	
-
     public List<Commande> userCommandes(int id) {
         List<Commande> list = new ArrayList<>();
         try {
@@ -68,6 +78,9 @@ public class CommandeDao {
         }
         return list;
     }
+	
+
+
 
     public void cancelCommande(int id) {
         //boolean result = false;
@@ -86,27 +99,29 @@ public class CommandeDao {
     public List<Commande> getAllCommandes() {
         List<Commande> list = new ArrayList<>();
         try {
-            query = "select * from orders";
+            query = "SELECT * FROM orders ORDER BY orders.o_id DESC";
             pst = this.con.prepareStatement(query);
             rs = pst.executeQuery();
             while (rs.next()) {
-            	Commande Commande = new Commande();
+                Commande commande = new Commande();
                 ProduitDao produitDao = new ProduitDao(this.con);
-                UserDao userdao = new UserDao(this.con);
+                UserDao userDao = new UserDao(this.con);
+                
                 int pId = rs.getInt("p_id");
                 int uId = rs.getInt("u_id");
                 Produit produit = produitDao.getSingleProduit(pId);
-                User user = userdao.getUserById(uId);
+                User user = userDao.getUserById(uId);
                 
-                Commande.setCommandeId(rs.getInt("o_id"));
-                Commande.setUid(rs.getInt("u_id"));
-                Commande.setName(produit.getName());
-                Commande.setUid(rs.getInt("o_id"));
-                Commande.setCategory(produit.getCategory());
-                Commande.setQunatity(rs.getInt("o_quantity"));
-                Commande.setPrice(produit.getPrice()*rs.getInt("o_quantity"));
-                Commande.setDate(rs.getString("o_date"));
-                list.add(Commande);
+                commande.setCommandeId(rs.getInt("o_id"));
+                commande.setUid(rs.getInt("u_id"));
+                commande.setUemail(user.getEmail());
+                commande.setName(produit.getName());
+                commande.setCategory(produit.getCategory());
+                commande.setQunatity(rs.getInt("o_quantity"));
+                commande.setPrice(produit.getPrice() * rs.getInt("o_quantity"));
+                commande.setDate(rs.getString("o_date"));
+                
+                list.add(commande);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,6 +129,9 @@ public class CommandeDao {
         }
         return list;
     }
+
+
+
 
     
 }

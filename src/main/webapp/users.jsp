@@ -1,5 +1,5 @@
 <%@page import="java.text.DecimalFormat"%>
-<%@page import="commerce.dao.CommandeDao"%>
+<%@page import="commerce.dao.UserDao"%>
 <%@page import="commerce.connection.DbCon"%>
 <%@page import="commerce.dao.ProduitDao"%>
 <%@page import="commerce.model.*"%>
@@ -10,11 +10,11 @@
 	DecimalFormat dcf = new DecimalFormat("#.##");
 	request.setAttribute("dcf", dcf);
 	User auth = (User) request.getSession().getAttribute("auth");
-	List<Commande> commandes = null;
+	List<User> users = null;
 	if (auth != null) {
 	    request.setAttribute("person", auth);
-	    CommandeDao commandeDao  = new CommandeDao(DbCon.getConnection());
-		commandes = commandeDao.getAllCommandes();
+	    UserDao userDao  = new UserDao(DbCon.getConnection());
+		users = userDao.getAllUsers();
 	}else{
 		response.sendRedirect("login.jsp");
 	}
@@ -30,30 +30,28 @@
 <body>
 	<%@include file="/includes/navbar2.jsp"%>
 	<div class="container">
-		<div class="card-header my-3">Commandes</div>
+		<div class="card-header my-3">Users</div>
 		<table class="table table-light">
 			<thead>
 				<tr>
-					<th scope="col">Date</th>
-					<th scope="col">email utilisateur</th>
-					
-					
-					<th scope="col">Quantite</th>
-					<th scope="col">Prix</th>
+					<th scope="col">Nom</th>
+					<th scope="col">Email utilisateur</th>
+					<th scope="col">Password</th>
 					<th scope="col">Supprimer</th>
 				</tr>
 			</thead>
 			<tbody>
 			
 			<%
-			if(commandes != null){
-				for(Commande o:commandes){%>
+			if(users != null){
+				for(User user:users){%>
 					<tr>
-						<td><%=o.getDate() %></td>
-						<td><%=o.getUid() %></td>
-						<td><%=o.getQunatity() %></td>
-						<td><%=dcf.format(o.getPrice()) %></td>
-						<td><a class="btn btn-sm btn-danger" href="annuler-commande-servlet?id=<%=o.getCommandeId()%>">Annuler la commande</a></td>
+				
+						<td><%=user.getName() %></td>
+						<td><%=user.getEmail() %></td>
+						<td><%=user.getPassword() %></td>
+						<td><a class="btn btn-sm btn-danger" href="supprimeruser-servlet?id=<%=user.getId()%>">Supprimer l'utilisateur</a></td>
+				
 					</tr>
 				<%}
 			}
